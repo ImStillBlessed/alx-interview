@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """this mdoule contains one function"""
 
 def canUnlockAll(boxes):
