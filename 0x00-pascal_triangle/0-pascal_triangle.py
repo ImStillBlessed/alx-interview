@@ -3,6 +3,7 @@
 This module contains one function
 """
 
+
 def pascal_triangle(n):
     """
     This function returns a list of lists of integers
