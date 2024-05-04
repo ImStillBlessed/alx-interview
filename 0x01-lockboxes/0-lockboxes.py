@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""this mdoule contains one function"""
+"""This module contains one function"""
+
 
 def canUnlockAll(boxes):
     """Method that determines if all the boxes can be opened.
@@ -12,6 +13,7 @@ def canUnlockAll(boxes):
         box = keys.pop()
         for key in boxes[box]:
             if key not in opened_boxes:
-                keys.add(key)
-                opened_boxes.add(key)
+                if key < len(boxes):
+                    keys.add(key)
+        opened_boxes.add(box)
     return len(opened_boxes) == len(boxes)
