@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module contains three function"""
 
+
 def copy_all(characters, clipboard, operations):
     """
     Method that copies all characters from the characters to the clipboard.
@@ -11,6 +12,7 @@ def copy_all(characters, clipboard, operations):
     """
     clipboard = characters
     return clipboard, operations + 1
+
 
 def paste(characters, clipboard, operations):
     """
@@ -23,10 +25,12 @@ def paste(characters, clipboard, operations):
     characters += clipboard
     return characters, operations + 1
 
+
 def minOperations(n):
     """
-    Method that calculates the fewest number of operations needed to result in exactly n H characters in the file.
-    Description: 
+    Method that calculates the fewest number of operations needed
+    to result in exactly n H characters in the file.
+    Description:
         In a text file, there is a single character H.
         Your text editor can execute only two operations in this file:
         Copy All and Paste. Given a number n, write a method that
