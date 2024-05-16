@@ -41,7 +41,8 @@ def signal_handler(sig, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 try:
-    for line in sys.stdin:
+    while True:
+        line = sys.stdin.readline()
         match = log_pattern.match(line)
         if not match:
             continue
