@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-This module contains a function that determines if a given data set represents a valid UTF-8 encoding.
+This module contains a function that determines if a given data set
+represents a valid UTF-8 encoding.
 """
 
 
