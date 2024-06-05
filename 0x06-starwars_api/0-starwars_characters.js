@@ -8,18 +8,24 @@ const url = 'https://swapi-api.hbtn.io/api/films/' + process.argv[2];
  * @param {string} characterUrl - The URL to the character data.
  * @returns {Promise<string>} - A promise that resolves to the character's name.
  */
-function fetchCharacterName(characterUrl) {
+function fetchCharacterName (characterUrl) {
   return new Promise((resolve, reject) => {
     request(characterUrl, (error, response, body) => {
       if (error) {
-        reject(`Error fetching character ${characterUrl}: ${error.message}`);
+        reject(
+          new Error(
+            `Error fetching character ${characterUrl}: ${error.message}`
+          )
+        );
       } else {
         try {
           const characterName = JSON.parse(body).name;
           resolve(characterName);
         } catch (parseError) {
           reject(
-            `Error parsing character data from ${characterUrl}: ${parseError.message}`
+            new Error(
+              `Error parsing character data from ${characterUrl}: ${parseError.message}`
+            )
           );
         }
       }
@@ -30,7 +36,7 @@ function fetchCharacterName(characterUrl) {
 /**
  * Fetches the details of a film and logs the names of all characters in that film.
  */
-async function fetchFilmCharacters() {
+async function fetchFilmCharacters () {
   request(url, async (error, response, body) => {
     if (error) {
       console.error(`Error fetching film: ${error.message}`);
