@@ -1,70 +1,69 @@
-#!/usr/bin/python3
-"""Game module for interview"""
-
+def sieve_of_eratosthenes(max_num):
+    """ Returns a list of primes up to max_num using Sieve of Eratosthenes """
+    is_prime = [True] * (max_num + 1)
+    p = 2
+    while (p * p <= max_num):
+        if (is_prime[p] == True):
+            for i in range(p * p, max_num + 1, p):
+                is_prime[i] = False
+        p += 1
+    prime_numbers = []
+    for p in range(2, max_num + 1):
+        if is_prime[p]:
+            prime_numbers.append(p)
+    return prime_numbers
 
 def isWinner(x, nums):
-    """
-    Determine the winner of the prime game between Ben and Maria.
-
-    The game consists of multiple rounds.
-    In each round, the number of primes
-    less than or equal to a given number is counted.
-    If the count is even, Ben
-    scores a point. If the count is odd, Maria scores a point.
-    The winner is the
-    one with the most points after all rounds.
-
-    Args:
-        x (int): The number of rounds to be played.
-        nums (List[int]): A list of integers
-                representing the upper bounds for
-                each round.
-
-    Returns:
-        str: 'Ben' if Ben wins, 'Maria' if Maria wins,
-            'Tie' if both have the
-            same score.
-
-    Example:
-        >>> isWinner(3, [4, 5, 1])
-        'Ben'
-    """
-
-    def SieveOfEratosthenes(n):
-        """
-        Generate a list of prime numbers up
-        to n (inclusive) using the Sieve of Eratosthenes algorithm.
-
-        Args:
-            n (int): The upper bound for generating prime numbers.
-
-        Returns:
-            List[int]: A list of prime numbers less than or equal to n.
-        """
-        result = []
-        prime = [True for i in range(n+1)]
-        p = 2
-        while p * p <= n:
-            if prime[p]:
-                for i in range(p * p, n+1, p):
-                    prime[i] = False
-            p += 1
-        for p in range(2, n+1):
-            if prime[p]:
-                result.append(p)
-        return result
-
-    ben = 0
-    maria = 0
+    max_n = max(nums)
+    primes = sieve_of_eratosthenes(max_n)
+    
+    maria_wins = 0
+    ben_wins = 0
+    
     for n in nums:
-        primes = SieveOfEratosthenes(n)
-        if len(primes) % 2 == 0:
-            ben += 1
-        else:
-            maria += 1
-    if ben > maria:
-        return 'Ben'
-    elif maria > ben:
-        return 'Maria'
+        if n <= 1:
+            continue
+        
+        current_set = list(range(1, n + 1))
+        current_turn = 0  # 0 for Maria, 1 for Ben
+        
+        while True:
+            if current_turn == 0:  # Maria's turn
+                can_move = False
+                for prime in primes:
+                    if prime > n:
+                        break
+                    if prime in current_set:
+                        can_move = True
+                        current_set = [num for num in current_set if num % prime != 0]
+                        break
+                if not can_move:
+                    ben_wins += 1
+                    break
+                current_turn = 1
+            
+            else:  # Ben's turn
+                can_move = False
+                for prime in primes:
+                    if prime > n:
+                        break
+                    if prime in current_set:
+                        can_move = True
+                        current_set = [num for num in current_set if num % prime != 0]
+                        break
+                if not can_move:
+                    maria_wins += 1
+                    break
+                current_turn = 0
+    
+    if maria_wins > ben_wins:
+        return "Maria"
+    elif ben_wins > maria_wins:
+        return "Ben"
     else:
-        return 'Tie'
+        return None
+
+# Example usage:
+x = 3
+nums = [4, 5, 1]
+print(isWinner(x, nums))  # Output should be "Ben"
