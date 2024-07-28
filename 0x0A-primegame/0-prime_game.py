@@ -54,6 +54,8 @@ def isWinner(x, nums):
                 result.append(p)
         return result
 
+    if x < 1:
+        return None
     ben = 0
     maria = 0
     for n in nums:
